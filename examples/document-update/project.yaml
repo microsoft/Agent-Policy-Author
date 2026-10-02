@@ -1,0 +1,202 @@
+name: document-update
+description: Inert prepare, confirm, and apply workflow
+tools:
+  - name: prepare_update
+    description: Prepare an inert document update
+    risk: write
+    schema_version: "1"
+    input_schema:
+      type: object
+      additionalProperties: false
+      required: [document_id, field, value]
+      properties:
+        document_id:
+          type: string
+        field:
+          type: string
+        value:
+          type: string
+  - name: confirm_update
+    description: Confirm a prepared inert update
+    risk: write
+    schema_version: "1"
+    input_schema:
+      type: object
+      additionalProperties: false
+      required: [operation_id, digest]
+      properties:
+        operation_id:
+          type: string
+        digest:
+          type: string
+  - name: apply_update
+    description: Apply an inert document update
+    risk: consequential-write
+    schema_version: "1"
+    input_schema:
+      type: object
+      additionalProperties: false
+      required: [operation_id, document_id, field, value, digest, route]
+      properties:
+        operation_id:
+          type: string
+        document_id:
+          type: string
+        field:
+          type: string
+        value:
+          type: string
+        digest:
+          type: string
+        route:
+          type: string
+          enum: [primary, shadow]
+context:
+  attributes:
+    - path: workflow.prepared.operation_id
+      type: string
+      trust: workflow_store
+      source: prepare_update.output.operation_id
+    - path: workflow.prepared.document_id
+      type: string
+      trust: workflow_store
+      source: prepare_update.output.document_id
+    - path: workflow.prepared.field
+      type: string
+      trust: workflow_store
+      source: prepare_update.output.field
+    - path: workflow.prepared.value
+      type: string
+      trust: workflow_store
+      source: prepare_update.output.value
+    - path: workflow.prepared.digest
+      type: string
+      trust: workflow_store
+      source: prepare_update.output.digest
+    - path: workflow.confirmation.operation_id
+      type: string
+      trust: approval_store
+      source: confirm_update.output.operation_id
+    - path: workflow.confirmation.digest
+      type: string
+      trust: approval_store
+      source: confirm_update.output.digest
+    - path: workflow.confirmation.confirmed
+      type: boolean
+      trust: approval_store
+      source: confirm_update.output.confirmed
+    - path: environment.name
+      type: string
+      trust: runtime_configuration
+traces:
+  - id: success-1
+    outcome: success
+    steps:
+      - type: tool_call
+        tool: prepare_update
+        arguments:
+          document_id: doc-10001
+          field: status
+          value: reviewed
+      - type: tool_result
+        tool: prepare_update
+        output:
+          operation_id: op-10001
+          document_id: doc-10001
+          field: status
+          value: reviewed
+          digest: a11111111111
+      - type: tool_call
+        tool: confirm_update
+        arguments:
+          operation_id: op-10001
+          digest: a11111111111
+      - type: tool_result
+        tool: confirm_update
+        output:
+          operation_id: op-10001
+          digest: a11111111111
+          confirmed: true
+      - type: tool_call
+        tool: apply_update
+        arguments:
+          operation_id: op-10001
+          document_id: doc-10001
+          field: status
+          value: reviewed
+          digest: a11111111111
+          route: primary
+  - id: success-2
+    outcome: success
+    steps:
+      - type: tool_call
+        tool: prepare_update
+        arguments:
+          document_id: doc-10002
+          field: category
+          value: archive
+      - type: tool_result
+        tool: prepare_update
+        output:
+          operation_id: op-10002
+          document_id: doc-10002
+          field: category
+          value: archive
+          digest: b22222222222
+      - type: tool_call
+        tool: confirm_update
+        arguments:
+          operation_id: op-10002
+          digest: b22222222222
+      - type: tool_result
+        tool: confirm_update
+        output:
+          operation_id: op-10002
+          digest: b22222222222
+          confirmed: true
+      - type: tool_call
+        tool: apply_update
+        arguments:
+          operation_id: op-10002
+          document_id: doc-10002
+          field: category
+          value: archive
+          digest: b22222222222
+          route: primary
+  - id: success-3
+    outcome: success
+    steps:
+      - type: tool_call
+        tool: prepare_update
+        arguments:
+          document_id: doc-10003
+          field: owner
+          value: team-blue
+      - type: tool_result
+        tool: prepare_update
+        output:
+          operation_id: op-10003
+          document_id: doc-10003
+          field: owner
+          value: team-blue
+          digest: c33333333333
+      - type: tool_call
+        tool: confirm_update
+        arguments:
+          operation_id: op-10003
+          digest: c33333333333
+      - type: tool_result
+        tool: confirm_update
+        output:
+          operation_id: op-10003
+          digest: c33333333333
+          confirmed: true
+      - type: tool_call
+        tool: apply_update
+        arguments:
+          operation_id: op-10003
+          document_id: doc-10003
+          field: owner
+          value: team-blue
+          digest: c33333333333
+          route: primary

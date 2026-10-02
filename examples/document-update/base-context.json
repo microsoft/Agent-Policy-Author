@@ -1,0 +1,34 @@
+{
+  "principal": {
+    "user_id": "user-123",
+    "tenant_id": "tenant-7"
+  },
+  "action": {
+    "tool": "apply_update",
+    "arguments": {
+      "operation_id": "op-20000",
+      "document_id": "doc-20000",
+      "field": "status",
+      "value": "reviewed",
+      "digest": "e3e7e0dc3793",
+      "route": "primary"
+    }
+  },
+  "workflow": {
+    "prepared": {
+      "operation_id": "op-20000",
+      "document_id": "doc-20000",
+      "field": "status",
+      "value": "reviewed",
+      "digest": "e3e7e0dc3793"
+    },
+    "confirmation": {
+      "operation_id": "op-20000",
+      "digest": "e3e7e0dc3793",
+      "confirmed": true
+    }
+  },
+  "environment": {
+    "name": "production"
+  }
+}

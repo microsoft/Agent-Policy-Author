@@ -1,0 +1,16 @@
+.venv/
+.lock-venv/
+.lock-test-*/
+.package-venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.data/
+.artifacts/
+.policy-authoring/
+.policy-evaluation/
+dist/
+build/
+*.egg-info/
