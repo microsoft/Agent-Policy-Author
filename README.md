@@ -50,6 +50,7 @@ Agent Policy Author is licensed under the [MIT License](LICENSE.TXT). See
 - [Persistence and local files](#persistence-and-local-files)
 - [Security and governance boundaries](#security-and-governance-boundaries)
 - [Supported discovery inputs](#supported-discovery-inputs)
+- [Using Agent Policy Author with your code](#using-agent-policy-author-with-your-code)
 - [Development and validation](#development-and-validation)
 
 ## Demo
@@ -1203,6 +1204,16 @@ Hooks JSON and JSONL trace files are strict inputs: malformed records fail
 discovery with the file and JSONL line/column rather than being treated as
 absent evidence. Supported JSONL trace files participate in the source
 revision, so editing one invalidates stale test and approval evidence.
+
+## Using Agent Policy Author with your code
+
+Agent Policy Author does not supply a runtime `@tool` decorator and does not
+require an application dependency. It statically recognizes common framework
+decorator and registration names, or accepts a language-neutral inventory,
+OpenAPI document, or project definition alongside the source. See
+[Using Agent Policy Author with your own code](docs/discovery-integration.md)
+for tested Python and TypeScript examples, manifest and OpenAPI options, risk
+classification, identity reconciliation, limitations, and discovery commands.
 
 ## Development and validation
 
