@@ -38,11 +38,19 @@ Changes to policy semantics should include:
 - evidence that denied actions do not reach execution.
 
 Discovery changes must remain static and bounded. Do not import or execute the
-repository being analyzed.
+repository being analyzed. New language or format support should implement the
+contracts in `src/policy_authoring/discovery/contracts.py`, register the
+adapter in `src/policy_authoring/discovery/registry.py`, emit stable tool
+identities with structured provenance and source spans, and add conformance
+coverage for limits, invalid inputs, duplicate identities, evidence, schemas,
+and deterministic output. Language-neutral inventories must remain compatible
+with `schemas/tool-inventory.v1.schema.json`.
 
 ## Extension points
 
-- `src/policy_authoring/discovery`: source and trace discovery
+- `src/policy_authoring/discovery/adapters`: language and format discovery
+- `src/policy_authoring/discovery/contracts.py`: discovery adapter contract
+- `src/policy_authoring/discovery/registry.py`: default adapter registration
 - `src/policy_authoring/recommendation`: policy and gate inference
 - `src/policy_authoring/adapters`: target-language compilation
 - `src/policy_authoring/evaluation`: native-engine parity testing

@@ -9,6 +9,17 @@ and versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Registry-based source and format discovery adapters with a public extension
+  contract and shared bounded-scanning limits.
+- Static TypeScript and JavaScript tool discovery for decorators, factory
+  registrations, async functions, parameter annotations, literal unions,
+  defaults, inferred primitive types, and inline JSON-compatible schemas.
+- Structured tool identities, provenance, source spans, and deterministic
+  handling of duplicate names and identities.
+- Versioned language-neutral tool inventory schema at
+  `schemas/tool-inventory.v1.schema.json`.
+- Adapter conformance coverage for limits, invalid files, duplicate identity,
+  evidence, schemas, and deterministic output.
 - TTY-aware interactive `workbench` lifecycle for policy inspection and
   editing, source reconciliation, canonical testing, governed finding
   dispositions, packet-bound approval, and immutable bundle publication.
@@ -37,6 +48,9 @@ and versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Python discovery now runs behind the shared language-adapter interface, while
+  OpenAPI, tool manifests, project definitions, and Agent Hooks traces run
+  through shared format adapters.
 - Policies with one or more explicit rules may now be approved without an
   allow outcome. Deny-, warn-, escalate-, and transform-only policies remain
   valid when their behavioral tests pass.
