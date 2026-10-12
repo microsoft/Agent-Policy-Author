@@ -67,8 +67,8 @@ behavioral testing, approval, compilation, and portable export.
 Agent Policy Author provides:
 
 - bounded, static discovery of agent tools and their source locations;
-- normalization of Python registrations, OpenAPI operations, JSON Schema tool
-  manifests, and Agent Hooks traces;
+- normalization of Python and TypeScript/JavaScript registrations, OpenAPI
+  operations, JSON Schema tool manifests, and Agent Hooks traces;
 - deterministic recommendations for argument binding, trusted context,
   approval, version, idempotency, and policy-decision controls;
 - an editable, engine-neutral canonical policy model;
@@ -807,8 +807,10 @@ modules so they can be tested independently.
 
 ### Layer 2: Static discovery
 
-The discovery subsystem reads supported source and manifest files beneath a
-bounded root. It produces a normalized `ProjectDefinition` containing:
+The discovery subsystem routes supported source and format files through a
+registry of language and format adapters beneath a bounded root. Adapters
+produce normalized contributions that are reconciled into a
+`ProjectDefinition` containing:
 
 - tool names and descriptions;
 - JSON input schemas;
@@ -818,9 +820,18 @@ bounded root. It produces a normalized `ProjectDefinition` containing:
 - normalized traces;
 - observed control evidence.
 
-For Python, discovery uses syntax and bounded call relationships rather than
-importing the target module. Generated directories, dependency directories,
-hidden paths, and symlinks are excluded from the scan.
+Python discovery uses syntax and bounded call relationships rather than
+importing the target module. TypeScript and JavaScript discovery uses
+tree-sitter to recognize decorators, factory registrations, async functions,
+parameter types, literal unions, defaults, and inline schemas without
+executing source code. Format adapters handle OpenAPI documents, tool
+manifests, existing project definitions, and Agent Hooks traces. Every
+discovered tool can carry a stable identity, structured provenance, and a
+source span. The versioned language-neutral inventory contract is published
+at [`schemas/tool-inventory.v1.schema.json`](schemas/tool-inventory.v1.schema.json).
+
+Generated directories, dependency directories, hidden paths, and symlinks are
+excluded from the scan.
 
 The discovery result can feed:
 
@@ -1163,6 +1174,15 @@ external authenticated review and publication system.
   decorators;
 - Python constructor registrations such as `ToolSpec(...)`;
 - Python type annotations, including `Literal` enumerations;
+- TypeScript and JavaScript `tool`, `functionTool`, `function_tool`,
+  `kernelFunction`, `kernel_function`, `aiFunction`, and `ai_function`
+  decorators;
+- TypeScript and JavaScript `tool(...)`, `functionTool(...)`,
+  `function_tool(...)`, `defineTool(...)`, and `createTool(...)` factory
+  registrations;
+- TypeScript parameter annotations, literal unions, optional/defaulted
+  parameters, inferred primitive defaults, async functions, and inline
+  JSON-compatible schemas;
 - OpenAPI operations;
 - JSON Schema and MCP-style tool manifests;
 - authoritative `mutating` and `requires_approval` manifest metadata;
@@ -1171,6 +1191,9 @@ external authenticated review and publication system.
 - bounded local helper-call evidence for mutation, version, idempotency,
   approval, operation binding, and audit controls.
 
+Language discovery is extensible through
+`DiscoveryAdapterRegistry`; adapters share the same bounded scanning limits,
+normalized identity/provenance model, and deterministic reconciliation rules.
 Discovery does not import project modules, execute repository code, or follow
 symlinks. If no supported tools are found, analysis returns
 `not_applicable`. `workbench` and `init` exit unsuccessfully in this case by

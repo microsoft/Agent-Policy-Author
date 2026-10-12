@@ -31,6 +31,9 @@ rpds-py==2026.6.3
 ruff==0.16.8
 shellingham==1.5.4
 textual==1.0.0
+tree-sitter==0.25.2
+tree-sitter-typescript==0.23.2
+tree-sitter-yaml==0.7.2
 typer==0.27.2
 types-jsonschema==4.26.0.20260518
 types-PyYAML==6.0.12.20260906

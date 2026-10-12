@@ -183,6 +183,41 @@ class ContextContract(StrictModel):
         return self
 
 
+class SourceSpan(StrictModel):
+    path: str
+    start_line: int = Field(ge=1)
+    start_column: int = Field(default=1, ge=1)
+    end_line: int | None = Field(default=None, ge=1)
+    end_column: int | None = Field(default=None, ge=1)
+
+
+class ToolIdentity(StrictModel):
+    canonical_id: str
+    declared_name: str
+    language: str | None = None
+    framework: str | None = None
+    namespace: str | None = None
+    qualified_name: str | None = None
+
+
+class ToolProvenance(StrictModel):
+    source_kind: Literal[
+        "project",
+        "runtime_manifest",
+        "manifest",
+        "constructor",
+        "decorator",
+        "openapi",
+        "source",
+        "heuristic",
+    ]
+    adapter_id: str
+    confidence: float = Field(ge=0, le=1)
+    language: str | None = None
+    framework: str | None = None
+    span: SourceSpan | None = None
+
+
 class ToolDefinition(StrictModel):
     name: str
     description: str = ""
@@ -195,6 +230,9 @@ class ToolDefinition(StrictModel):
     handler: str | None = None
     source_path: str | None = None
     source_line: int | None = Field(default=None, ge=1)
+    source_span: SourceSpan | None = None
+    identity: ToolIdentity | None = None
+    provenance: list[ToolProvenance] | None = None
     metadata_source: Literal[
         "project",
         "runtime_manifest",
@@ -332,6 +370,8 @@ class DiscoveryEvidence(StrictModel):
     path: str
     detail: str
     confidence: float = Field(ge=0, le=1)
+    adapter_id: str | None = None
+    span: SourceSpan | None = None
 
 
 class DiscoveryQuestion(StrictModel):
@@ -361,6 +401,7 @@ class DiscoveryProvenance(StrictModel):
     selected_source: str | None = None
     project_definition: str | None = None
     ignored_directories: list[str] = Field(default_factory=list)
+    adapters: list[str] | None = None
 
 
 class DiscoveryReport(StrictModel):
