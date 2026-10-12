@@ -228,12 +228,13 @@ governed action places that confirmation before the action.
 Workspace source paths are relative to the workspace whenever possible.
 Moving the source tree and workspace together therefore preserves the binding.
 Cross-drive source paths are explicitly external and absolute; unsafe legacy
-workspaces must be reinitialized. Python, JSON, JSONL, YAML, and other
-supported discovery inputs are included in source revision hashing. Editing an
-Agent Hooks JSONL trace therefore invalidates stale test and approval evidence.
-Malformed candidate Agent Hooks JSON or JSONL inputs fail discovery explicitly;
-JSONL errors identify the source line and column rather than silently removing
-the trace from the inventory.
+workspaces must be reinitialized. Python, TypeScript, JavaScript, JSON, JSONL,
+YAML, and other supported discovery inputs are included in source revision
+hashing. Editing source, a manifest, or an Agent Hooks JSONL trace therefore
+invalidates stale test and approval evidence. Malformed candidate Agent Hooks
+JSON or JSONL inputs fail discovery explicitly; JSONL errors identify the
+source line and column rather than silently removing the trace from the
+inventory.
 
 Identity-bearing collections are validated before workflow execution.
 Duplicate policy rule IDs, tool names, context paths, trace IDs, review action
