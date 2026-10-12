@@ -52,9 +52,9 @@ dev = [
 policy-author = "policy_authoring.cli:app"
 
 [project.urls]
-Documentation = "https://github.com/veersingh_microsoft/Agent-Policy-Author#readme"
-Issues = "https://github.com/veersingh_microsoft/Agent-Policy-Author/issues"
-Repository = "https://github.com/veersingh_microsoft/Agent-Policy-Author"
+Documentation = "https://github.com/microsoft/Agent-Policy-Author#readme"
+Issues = "https://github.com/microsoft/Agent-Policy-Author/issues"
+Repository = "https://github.com/microsoft/Agent-Policy-Author"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/policy_authoring"]

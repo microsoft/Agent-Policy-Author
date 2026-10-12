@@ -15,7 +15,7 @@ Do not open a public issue for a suspected vulnerability.
 
 Use GitHub's **Report a vulnerability** option on the repository Security tab:
 
-<https://github.com/veersingh_microsoft/Agent-Policy-Author/security/advisories/new>
+<https://github.com/microsoft/Agent-Policy-Author/security/advisories/new>
 
 Include:
 

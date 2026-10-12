@@ -102,7 +102,7 @@ Agent Policy Author supports Python 3.11 through 3.13.
 Install the CLI directly from the repository:
 
 ```powershell
-pipx install "git+https://github.com/veersingh_microsoft/Agent-Policy-Author.git"
+pipx install "git+https://github.com/microsoft/Agent-Policy-Author.git"
 policy-author --version
 ```
 
@@ -115,14 +115,14 @@ pipx upgrade agent-policy-author
 ### Run without a persistent installation
 
 ```powershell
-uvx --from "git+https://github.com/veersingh_microsoft/Agent-Policy-Author.git" `
+uvx --from "git+https://github.com/microsoft/Agent-Policy-Author.git" `
   policy-author --help
 ```
 
 ### Install for development
 
 ```powershell
-git clone https://github.com/veersingh_microsoft/Agent-Policy-Author.git
+git clone https://github.com/microsoft/Agent-Policy-Author.git
 cd Agent-Policy-Author
 python -m venv .venv
 .\.venv\Scripts\python -m pip install -e ".[dev]"

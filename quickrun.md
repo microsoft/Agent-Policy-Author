@@ -49,7 +49,7 @@ $CheckoutRun = Join-Path $Runs "checkout-latency"
 New-Item -ItemType Directory -Path $Root | Out-Null
 
 git -c core.longpaths=true clone --depth 1 `
-    https://github.com/veersingh_microsoft/Agent-Policy-Author.git `
+    https://github.com/microsoft/Agent-Policy-Author.git `
     $Repo
 Assert-NativeSuccess "Repository clone"
 $RepoStatus = git -C $Repo status --porcelain
@@ -169,7 +169,7 @@ if (Test-Path $Root) {
 New-Item -ItemType Directory -Path $Root | Out-Null
 
 git -c core.longpaths=true clone --depth 1 `
-    https://github.com/veersingh_microsoft/Agent-Policy-Author.git `
+    https://github.com/microsoft/Agent-Policy-Author.git `
     $Repo
 if ($LASTEXITCODE -ne 0) {
     throw "Repository clone failed with exit code $LASTEXITCODE."

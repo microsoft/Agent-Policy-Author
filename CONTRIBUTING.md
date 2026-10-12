@@ -7,7 +7,7 @@ independently.
 ## Local setup
 
 ```powershell
-git clone https://github.com/veersingh_microsoft/Agent-Policy-Author.git
+git clone https://github.com/microsoft/Agent-Policy-Author.git
 cd Agent-Policy-Author
 python -m venv .venv
 .\.venv\Scripts\python -m pip install -e ".[dev]"
